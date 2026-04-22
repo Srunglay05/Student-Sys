@@ -1,0 +1,273 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+:root {
+  --bg: #f6f7fb;
+  --surface: #ffffff;
+  --text: #18191a;
+  --muted: rgba(24, 25, 26, 0.7);
+
+  --accent: #2d9cdb;
+  --accent-2: #56ccf2;
+
+  --shadow: 0 15px 25px rgba(0,0,0,0.08);
+
+  --clock-size: clamp(260px, 72vw, 400px);
+}
+
+/* Themes */
+body[data-theme="sunset"] {
+  --accent: #f2994a;
+  --accent-2: #eb5757;
+}
+
+body[data-theme="forest"] {
+  --accent: #27ae60;
+  --accent-2: #6fcf97;
+}
+
+/* Dark mode */
+body.dark {
+  --bg: #111213;
+  --surface: #18191a;
+  --text: #ffffff;
+  --muted: rgba(255, 255, 255, 0.75);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Layout */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+/* Header */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  width: min(850px, 100%);
+  padding: 18px 22px;
+  background: var(--surface);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+/* LEFT */
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.brand__name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.brand__tag {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* CENTER */
+.readout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.readout__time {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.readout__date {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* RIGHT */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* BUTTON GROUP */
+.theme-switch {
+  display: flex;
+  gap: 6px;
+  background: rgba(0,0,0,0.05);
+  padding: 4px;
+  border-radius: 999px;
+}
+
+/* BUTTON BASE (ALWAYS GRAY) */
+.theme-btn {
+  border: none;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  cursor: pointer;
+
+  background: #e9edf2;
+  color: #333;
+
+  transition: all 0.25s ease;
+}
+
+/* Hover */
+.theme-btn:hover {
+  transform: translateY(-1px);
+  background: #dde3ea;
+}
+
+/* ACTIVE BUTTON (COLOR) */
+.theme-btn.is-active {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* OCEAN */
+.theme-btn[data-theme="ocean"].is-active {
+  background: linear-gradient(135deg, #2d9cdb, #56ccf2);
+  color: #fff;
+}
+
+/* SUNSET */
+.theme-btn[data-theme="sunset"].is-active {
+  background: linear-gradient(135deg, #f2994a, #eb5757);
+  color: #fff;
+}
+
+/* FOREST */
+.theme-btn[data-theme="forest"].is-active {
+  background: linear-gradient(135deg, #27ae60, #6fcf97);
+  color: #fff;
+}
+
+/* DARK MODE (KEEP SAME STYLE) */
+body.dark .theme-switch {
+  background: rgba(255,255,255,0.08);
+}
+
+body.dark .theme-btn {
+  background: #e9edf2;
+  color: #333;
+}
+
+/* Dark mode toggle */
+.mode-switch {
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+}
+
+/* CLOCK */
+.clock {
+  position: relative;
+  width: var(--clock-size);
+  height: var(--clock-size);
+  border-radius: 50%;
+  background: var(--surface);
+
+  border: 6px solid transparent;
+  background-image:
+    linear-gradient(var(--surface), var(--surface)),
+    linear-gradient(135deg, var(--accent), var(--accent-2));
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+
+  /* ✨ SHADOW MAGIC */
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.12),
+    0 20px 60px rgba(0,0,0,0.08);
+
+  transition: all 0.3s ease;
+}
+
+.clock::before {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  opacity: 0.15;
+  filter: blur(20px);
+  z-index: -1;
+}
+
+body.dark .clock {
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.6),
+    0 0 25px rgba(255,255,255,0.05);
+}
+
+/* Numbers */
+.clock label {
+  position: absolute;
+  inset: 20px;
+  text-align: center;
+  transform: rotate(calc(var(--i) * 30deg));
+}
+
+.clock label span {
+  display: inline-block;
+  transform: rotate(calc(var(--i) * -30deg));
+  font-weight: bold;
+}
+
+/* Hands */
+.indicator {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.hand {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform-origin: bottom;
+  transition: 0.4s ease;
+}
+
+.hour {
+  height: 25%;
+  width: 6px;
+  background: var(--text);
+}
+
+.minute {
+  height: 30%;
+  width: 4px;
+  background: var(--text);
+}
+
+.second {
+  height: 35%;
+  width: 2px;
+  background: red;
+}
